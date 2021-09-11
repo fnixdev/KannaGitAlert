@@ -175,14 +175,14 @@ Total forks count is now: __{data['repository']['forks_count']} ⚡️__
                 commit_msg = escape(commit["message"])
             commits_text += f"{commit_msg}\n<a href='{commit['url']}'>{commit['id'][:7]}</a> - {commit['author']['name']} {escape('<')}{commit['author']['email']}{escape('>')}\n\n"
             if len(commits_text) > 1000:
-                text = f"""✨ <b>{escape(data['repository']['name'])}</b> - New {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
+                text = f"""✨ <b>{escape(data['repository']['name'])}</b> - Novo {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
 {commits_text}
 """
                 await msg_.edit(text, parse_mode="html")
                 commits_text = ""
         if not commits_text:
             return "tf"
-        text = f"""✨ <b>{escape(data['repository']['name'])}</b> - New {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
+        text = f"""✨ <b>{escape(data['repository']['name'])}</b> - Novo {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
 {commits_text}
 """
         if len(data["commits"]) > 10:
@@ -247,7 +247,7 @@ if config.HEROKU_APP_NAME:
 async def bot_(client, message):
     key_board = [
         InlineKeyboardButton(
-            text="Source Code", url="https://github.com/DevsExpo/GitAlertBot"
+            text="Source Code", url="https://github.com/fnixdev/KannaGitBot"
         ),
     ]
     file = "https://i.makeagif.com/media/2-18-2016/M3yKm-.gif"
