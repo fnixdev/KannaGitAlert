@@ -33,7 +33,7 @@ chat = config.CHAT_ID
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - [FridayAssistant] - %(levelname)s - %(message)s",
+    format="%(asctime)s - [KannaX] - %(levelname)s - %(message)s",
 )
 logging.getLogger("pyrogram").setLevel(logging.ERROR)
 
@@ -118,23 +118,23 @@ async def ghoo_k(chat):
     if data.get("issue"):
         if data.get("comment"):
             issue_comment = f"""
-**💬 New Comment :** `{data['repository']['name']}` 
+**💬 Novo Comentario :** `{data['repository']['name']}` 
 `{data['comment']['body']}`
 [#{data['issue']['number']}]({data['comment']['html_url']})
 """
             await msg_.edit(issue_comment)
         else:
             issue_c = f"""
-**⚠️ New {data['action']} Issue :** `{data['repository']['name']}` 
+**⚠️ Novo {data['action']} Problema :** `{data['repository']['name']}` 
 Title : {data['issue']['title']}
-{data['issue']['body'] or "No Description"}
+{data['issue']['body'] or "Sem Descrição"}
 [{data['issue']['number']}]({data['issue']['html_url']})"""
             await msg_.edit(issue_c)
         return "ok"
     if data.get("forkee"):
         fork_ = f"""
 🍴 {data['forkee']['svn_url']} Forked {data['repository']['html_url']}
-Total forks count is now: __{data['repository']['forks_count']} ⚡️__
+Numero total de forks: __{data['repository']['forks_count']} ⚡️__
 """
         await msg_.edit(fork_)
         return "ok"
