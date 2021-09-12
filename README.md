@@ -1,23 +1,3 @@
-## Inspired From [@Pokurt's GitGram](https://github.com/pokurt/GitGram/)
-
-## Run Bot: 
-### Local Host
-
-* Git Clone Repo :
-- For Pyrogram Version : `git clone github.com/fnixdev/KannaGitBot -b pyrogram`
-* Make `local.env` File With the Values As Shown Below : 
-```
-API_ID=12222
-API_HASH="api_hash"
-BOT_TOKEN="bot_token"
-HOST="http://127.0.0.1"
-PORT=8000
-```
-* Now Just Run `python3 git_alert_core.py`
-* Now Navigate To Url : `http://127.0.0.1:8080/ghook/<chat-id>` (replace <chat-id> with the chat where you want alerts to be sent)
-* Go to Your Repo And Set The Webhook Url & Make Sure To Set It To Json. The Bot Should Sent Alerts Now.
-* Happy Gitting :)
-
 ### Heroku
 * Choose Your Fav Version And Click On Deploy Button
 * Fill In The Values 
@@ -27,5 +7,5 @@ PORT=8000
 * Happy Gitting :)
 
 
-#### Pyrogram
+#### Deploy
 [![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/fnixdev/KannaGitBot/blob/pyrogram)
