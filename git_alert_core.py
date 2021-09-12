@@ -173,20 +173,20 @@ Numero total de forks: __{data['repository']['forks_count']} ⚡️__
                 commit_msg = escape(commit["message"]).split("\n")[0]
             else:
                 commit_msg = escape(commit["message"])
-            commits_text += f"{commit_msg}\n<a href='{commit['url']}'>{commit['id'][:7]}</a> - {commit['author']['name']} {escape('<')}{commit['author']['email']}{escape('>')}\n\n"
+            commits_text += f"{commit_msg}\n<a href='{commit['url']}'>{commit['id'][:7]}</a> - {commit['author']['name']}\n\n"
             if len(commits_text) > 1000:
-                text = f"""✨ <b>{escape(data['repository']['name'])}</b> - Novo {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
+                text = f"""✨ Novos commits em {escape(data['repository']['name'])}
 {commits_text}
 """
                 await msg_.edit(text, parse_mode="html")
                 commits_text = ""
         if not commits_text:
             return "tf"
-        text = f"""✨ <b>{escape(data['repository']['name'])}</b> - Novo {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
+        text = f"""✨ Novos commits em {escape(data['repository']['name'])}
 {commits_text}
 """
         if len(data["commits"]) > 10:
-            text += f"\n\n<i>And {len(data['commits']) - 10} other commits</i>"
+            text += f"\n\n<i>e {len(data['commits']) - 10} outros commits</i>"
         await msg_.edit(text, parse_mode="html")
         return "ok"
     if data.get("pull_request"):
@@ -247,11 +247,11 @@ if config.HEROKU_APP_NAME:
 async def bot_(client, message):
     key_board = [
         InlineKeyboardButton(
-            text="Source Code", url="https://github.com/fnixdev/KannaGitBot"
+            text="Source", url="https://github.com/fnixdev/KannaGitBot"
         ),
     ]
-    file = "https://i.makeagif.com/media/2-18-2016/M3yKm-.gif"
-    msg = f"__Hello__ {message.from_user.mention}. __I Am A Simple Git ALert Bot. I Notify In Chat When My Hook Gets Triggred From Github. You Can Find My Source Code on Github.com__"
+    file = "https://telegra.ph/file/c64de99e926b05c80eaa6.gif"
+    msg = f"__Hello__ {message.from_user.mention}. __Eu sou um Kanna, um GitBot de alerta. Eu notifico no bate-papo quando meu gancho é acionado pelo Github. Você pode encontrar meu código-fonte em Github.com__"
     await message.reply_animation(
         file, caption=msg, quote=True, reply_markup=InlineKeyboardMarkup([key_board])
     )
