@@ -247,11 +247,11 @@ if config.HEROKU_APP_NAME:
 async def bot_(client, message):
     key_board = [
         InlineKeyboardButton(
-            text="Source", url="https://github.com/fnixdev/KannaGitBot"
+            text="✨ KannaX Updates", url="https://t.me/kannaxup"
         ),
     ]
     file = "https://telegra.ph/file/c64de99e926b05c80eaa6.gif"
-    msg = f"__Hello__ {message.from_user.mention}. __Eu sou um Kanna, um GitBot de alerta. Eu notifico no bate-papo quando meu gancho é acionado pelo Github. Você pode encontrar meu código-fonte em Github.com__"
+    msg = f"__Hello__ {message.from_user.mention}. __Eu sou um Kanna, um GitBot de alerta. Eu notifico no bate-papo quando alguma alteração é feita no repositorio. Você pode me encontrar ativa em meu grupo.__"
     await message.reply_animation(
         file, caption=msg, quote=True, reply_markup=InlineKeyboardMarkup([key_board])
     )
