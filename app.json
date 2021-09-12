@@ -1,13 +1,13 @@
 {
-  "name": "GitAlertBot - Pyrogram",
-  "description": "An Git Alert Bot in Pyrogram.",
+  "name": "Kanna GitBot - Pyrogram",
+  "description": "Bot alerta Git em Pyrogram.",
   "keywords": [
     "productivity",
     "python",
     "github"
   ],
-  "repository": "https://github.com/DevsExpo/GitAlertBot",
-  "logo": "https://telegra.ph//file/5b8af3f478367355593cf.jpg",
+  "repository": "https://github.com/fnixdev/KannaGitBot",
+  "logo": "https://telegra.ph/file/f84f9c790b22b18e63e2d.jpg",
   "env": {
     "BOT_TOKEN": {
       "description": "Your Bot Token. From @BotFather.",
