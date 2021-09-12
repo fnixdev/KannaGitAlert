@@ -173,7 +173,7 @@ Numero total de forks: __{data['repository']['forks_count']} ⚡️__
                 commit_msg = escape(commit["message"]).split("\n")[0]
             else:
                 commit_msg = escape(commit["message"])
-            commits_text += f"\n\n{commit_msg}<a href='{commit['url']}'>{commit['id'][:7]}</a> by <i>{commit['author']['name']}</i>\n\n"
+            commits_text += f"\n\n↳ {commit_msg}<a href='{commit['url']}'>{commit['id'][:7]}</a> by <i>{commit['author']['name']}</i>\n\n"
             if len(commits_text) > 1000:
                 text = f"""✨ Novos commits em {escape(data['repository']['name'])}
 {commits_text}
