@@ -118,23 +118,23 @@ async def ghoo_k(chat):
     if data.get("issue"):
         if data.get("comment"):
             issue_comment = f"""
-**💬 Novo Comentario :** `{data['repository']['name']}` 
+**💬 New Comment :** `{data['repository']['name']}` 
 `{data['comment']['body']}`
 [#{data['issue']['number']}]({data['comment']['html_url']})
 """
             await msg_.edit(issue_comment)
         else:
             issue_c = f"""
-**⚠️ Novo {data['action']} Problema :** `{data['repository']['name']}` 
+**⚠️ New {data['action']} Issue :** `{data['repository']['name']}` 
 Title : {data['issue']['title']}
-{data['issue']['body'] or "Sem Descrição"}
+{data['issue']['body'] or "No Description"}
 [{data['issue']['number']}]({data['issue']['html_url']})"""
             await msg_.edit(issue_c)
         return "ok"
     if data.get("forkee"):
         fork_ = f"""
 🍴 {data['forkee']['svn_url']} Forked {data['repository']['html_url']}
-Numero total de forks: __{data['repository']['forks_count']} ⚡️__
+Total forks count is now: __{data['repository']['forks_count']} ⚡️__
 """
         await msg_.edit(fork_)
         return "ok"
@@ -173,20 +173,20 @@ Numero total de forks: __{data['repository']['forks_count']} ⚡️__
                 commit_msg = escape(commit["message"]).split("\n")[0]
             else:
                 commit_msg = escape(commit["message"])
-            commits_text += f"\n↳ <b>{commit_msg}</b> - by 🧙🏻‍♂️ <i>{commit['author']['name']}</i>\n"
+            commits_text += f"{commit_msg}\n<a href='{commit['url']}'>{commit['id'][:7]}</a> - {commit['author']['name']} {escape('<')}{commit['author']['email']}{escape('>')}\n\n"
             if len(commits_text) > 1000:
-                text = f"""✨ Novos commits em {escape(data['repository']['name'])}
+                text = f"""✨ <b>{escape(data['repository']['name'])}</b> - New {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
 {commits_text}
 """
                 await msg_.edit(text, parse_mode="html")
                 commits_text = ""
         if not commits_text:
             return "tf"
-        text = f"""✨ Novos commits em {escape(data['repository']['name'])}
+        text = f"""✨ <b>{escape(data['repository']['name'])}</b> - New {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
 {commits_text}
 """
         if len(data["commits"]) > 10:
-            text += f"\n\n<i>e {len(data['commits']) - 10} outros commits</i>"
+            text += f"\n\n<i>And {len(data['commits']) - 10} other commits</i>"
         await msg_.edit(text, parse_mode="html")
         return "ok"
     if data.get("pull_request"):
