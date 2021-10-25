@@ -185,7 +185,7 @@ Numero total de forks: __{data['repository']['forks_count']} ⚡️__
                 ),
             ]
             gif = "https://telegra.ph/file/1da32910242b94d8632b3.gif"
-            await msg_.reply_animation(
+            await msg_.send_animation(
                 gif,
                 caption=text,
                 reply_markup=InlineKeyboardMarkup(buttons)
