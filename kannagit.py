@@ -198,17 +198,7 @@ Numero total de forks: __{data['repository']['forks_count']} ⚡️__
 """
         if len(data["commits"]) > 10:
             text += f"\n\n<i>e {len(data['commits']) - 10} outros commits</i>"
-        buttons = [
-            InlineKeyboardButton(
-                text="Ultimos Commits", url=f"{commit['url']}"
-            ),
-        ]
-        gif = "https://telegra.ph/file/1da32910242b94d8632b3.gif"
-        await msg_.reply_animation(
-            gif,
-            caption=text,
-            reply_markup=InlineKeyboardMarkup(buttons)
-        )
+        await msg_.edit(text, parse_mode="html")
         return "ok"
     if data.get("pull_request"):
         if data.get("comment"):
