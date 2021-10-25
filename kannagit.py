@@ -184,7 +184,7 @@ Numero total de forks: __{data['repository']['forks_count']} ⚡️__
                     text="Ultimos Commits", url=f"{commit['url']}"
                 ),
             ]
-            gif = rand_array(GIF_COMMIT)
+            gif = "https://telegra.ph/file/1da32910242b94d8632b3.gif"
             await msg_.reply_animation(
                 gif,
                 caption=text,
@@ -203,7 +203,7 @@ Numero total de forks: __{data['repository']['forks_count']} ⚡️__
                 text="Ultimos Commits", url=f"{commit['url']}"
             ),
         ]
-        gif = rand_array(GIF_COMMIT)
+        gif = "https://telegra.ph/file/1da32910242b94d8632b3.gif"
         await msg_.reply_animation(
             gif,
             caption=text,
@@ -291,11 +291,3 @@ if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     loop.run_until_complete(run())
 
-
-GIF_COMMIT = ["https://telegra.ph/file/6a4fb0a808e5815308cc7.gif",
-              "https://telegra.ph/file/1da32910242b94d8632b3.gif",
-              "https://telegra.ph/file/782de8b2ed30535cf83b3.gif"]
-
-def rand_array(array: list, string: bool = True):
-    random_num = random.choice(array)
-    return str(random_num) if string else random_num
