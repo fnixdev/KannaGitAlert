@@ -20,13 +20,12 @@ from pyrogram import __version__ as ve
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from quart import Quart, jsonify, request
-import random
 
 from config import Config as config
 
 gitalertapi = Quart(__name__)
 
-
+    
 port_ = config.PORT
 host = config.HOST
 chat = config.CHAT_ID
@@ -41,16 +40,16 @@ logging.getLogger("pyrogram").setLevel(logging.ERROR)
 if not config.BOT_TOKEN:
     logging.error("Who Will Give Me BOT_TOKEN? Don't You Want To Send Alerts?")
     quit(1)
-
+    
 if not config.API_ID:
     logging.error("Who Will Give Me API_ID? Telegram Will Kill me.")
     quit(1)
-
+    
 if not config.API_HASH:
     logging.error("Who Will Give Me API_ID? Telegram Will Kill me.")
     quit(1)
-
-
+    
+    
 gitbot = Client(
     "gitbot_app",
     api_id=config.API_ID,
@@ -65,6 +64,7 @@ async def ping_app():
         async with session.get(app_url) as response:
             return response.status
     return 404
+
 
 
 @gitalertapi.route("/", methods=["GET", "POST"])
@@ -106,11 +106,10 @@ async def ghoo_k(chat):
     logging.info(f"Recieved : {siz_} Of Data.")
     try:
         msg_ = await gitbot.send_message(
-            chat, f"`Received {siz_} Bytes Of Data. Now Verifying..`"
-        )
+        chat, f"`Received {siz_} Bytes Of Data. Now Verifying..`"
+    )
     except BaseException as e:
-        logging.critical(
-            f"Unable To Send Message To Chat. \nError : {e} \nApi is Exiting")
+        logging.critical(f"Unable To Send Message To Chat. \nError : {e} \nApi is Exiting")
         return f"Error : {e}"
     if data.get("hook"):
         web_hook_done = f"**Webhooked 🔗** [{data['repository']['name']}]({data['repository']['html_url']}) **By ✨** [{data['sender']['login']}]({data['sender']['html_url']})"
@@ -119,14 +118,14 @@ async def ghoo_k(chat):
     if data.get("issue"):
         if data.get("comment"):
             issue_comment = f"""
-**💬 Novo Comentario :** `{data['repository']['name']}`
+**💬 Novo Comentario :** `{data['repository']['name']}` 
 `{data['comment']['body']}`
 [#{data['issue']['number']}]({data['comment']['html_url']})
 """
             await msg_.edit(issue_comment)
         else:
             issue_c = f"""
-**⚠️ Novo {data['action']} Problema :** `{data['repository']['name']}`
+**⚠️ Novo {data['action']} Problema :** `{data['repository']['name']}` 
 Title : {data['issue']['title']}
 {data['issue']['body'] or "Sem Descrição"}
 [{data['issue']['number']}]({data['issue']['html_url']})"""
@@ -176,21 +175,11 @@ Numero total de forks: __{data['repository']['forks_count']} ⚡️__
                 commit_msg = escape(commit["message"])
             commits_text += f"\n↳ <b>{commit_msg}</b> <a href='{commit['url']}'>{commit['id'][:7]}</a> - by 🧙🏻‍♂️ <i>{commit['author']['name']}</i>\n"
             if len(commits_text) > 1000:
-                text = f"""#KannaGit\n✨ Novos commits em {escape(data['repository']['name'])}
+                text = f"""✨ Novos commits em {escape(data['repository']['name'])}
 {commits_text}
 """
-            buttons = [
-                InlineKeyboardButton(
-                    text="Ultimos Commits", url=f"{commit['url']}"
-                ),
-            ]
-            gif = "https://telegra.ph/file/1da32910242b94d8632b3.gif"
-            await msg_.send_animation(
-                gif,
-                caption=text,
-                reply_markup=InlineKeyboardMarkup(buttons)
-            )
-            commits_text = ""
+                await msg_.edit(text, parse_mode="html")
+                commits_text = ""
         if not commits_text:
             return "tf"
         text = f"""✨ Novos commits em {escape(data['repository']['name'])}
@@ -246,7 +235,7 @@ Numero total de forks: __{data['repository']['forks_count']} ⚡️__
         return "ok"
     await msg_.delete()
     return "tf"
-
+  
 
 if config.HEROKU_APP_NAME:
     scheduler = AsyncIOScheduler()
@@ -280,4 +269,3 @@ async def run():
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     loop.run_until_complete(run())
-
