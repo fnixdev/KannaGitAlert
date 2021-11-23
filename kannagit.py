@@ -25,7 +25,7 @@ from config import Config as config
 
 gitalertapi = Quart(__name__)
 
-GIF_COMMIT [
+GIF_COMMIT = [
   "https://telegra.ph/file/6a4fb0a808e5815308cc7.gif",
   "https://telegra.ph/file/1da32910242b94d8632b3.gif"
 ]
