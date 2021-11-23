@@ -142,7 +142,7 @@ Title : {data['issue']['title']}
         fork_count = f"{data['repository']['forks_count']}"
         buttonfork = [
         InlineKeyboardButton(
-            text=f"Total Forks {forks_count}"),
+            text=f"Total Forks {fork_count}"),
         ]
         await msg_.reply_text(text=fork_,parse_mode="html",reply_markup=buttonfork)
         return "ok"
