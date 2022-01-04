@@ -25,11 +25,7 @@ from config import Config as config
 
 gitalertapi = Quart(__name__)
 
-GIF_COMMIT = [
-  "https://telegra.ph/file/6a4fb0a808e5815308cc7.gif",
-  "https://telegra.ph/file/1da32910242b94d8632b3.gif"
-]
-
+    
 port_ = config.PORT
 host = config.HOST
 chat = config.CHAT_ID
@@ -116,7 +112,7 @@ async def ghoo_k(chat):
         logging.critical(f"Unable To Send Message To Chat. \nError : {e} \nApi is Exiting")
         return f"Error : {e}"
     if data.get("hook"):
-        web_hook_done = f"**Repositorio Conectado 🔗** [{data['repository']['name']}]({data['repository']['html_url']}) **By ✨** [{data['sender']['login']}]({data['sender']['html_url']})"
+        web_hook_done = f"**Webhooked 🔗** [{data['repository']['name']}]({data['repository']['html_url']}) **By ✨** [{data['sender']['login']}]({data['sender']['html_url']})"
         await msg_.edit(web_hook_done)
         return "ok"
     if data.get("issue"):
@@ -137,14 +133,10 @@ Title : {data['issue']['title']}
         return "ok"
     if data.get("forkee"):
         fork_ = f"""
-🍴 {data['forkee']['svn_url']} Fez fork de {data['repository']['html_url']}
+🍴 {data['forkee']['svn_url']} Forked {data['repository']['html_url']}
+Numero total de forks: __{data['repository']['forks_count']} ⚡️__
 """
-        fork_count = f"{data['repository']['forks_count']}"
-        buttonfork = [
-        InlineKeyboardButton(
-            text=f"Total Forks {fork_count}"),
-        ]
-        await msg_.reply_text(text=fork_,parse_mode="html",reply_markup=buttonfork)
+        await msg_.edit(fork_)
         return "ok"
     if data.get("ref_type"):
         response = f"A new {data['ref_type']} on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was created by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
