@@ -199,6 +199,15 @@ async def ghoo_k(chat):
                 text = f"""✨ Novos commits em {escape(data['repository']['name'])}
 {commits_text}
 """
+                button = InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton(
+                                    f"Todos os Commits", url="{data['repository']['html_url']}/commits"
+                                )
+                            ]
+                        ]
+                    )
                 await msg_.delete()
                 await gitbot.send_message(chat, text, parse_mode="html", disable_web_page_preview=True)
                 commits_text = ""
