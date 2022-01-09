@@ -130,7 +130,7 @@ async def ghoo_k(chat):
                                     ]
                                 )
             await msg_.delete()
-            await gitbot.send_message(chat, issue_comment, reply_markup=button, parse_mode="html", disable_web_page_preview=True)
+            await gitbot.send_message(chat, issue_comment, reply_markup=button, disable_web_page_preview=True)
         else:
             issue_c = f"""#Issue {data['action']} em: {data['repository']['name']}\n\n**✨ Título:** `{data['issue']['title']}`\n**💬 Descrição:** __{data['issue']['body'] or "Sem Descrição"}__"""
             button = InlineKeyboardMarkup(
@@ -143,7 +143,7 @@ async def ghoo_k(chat):
                         ]
                     )
             await msg_.delete()
-            await gitbot.send_message(chat, issue_c, reply_markup=button, parse_mode="html", disable_web_page_preview=True)
+            await gitbot.send_message(chat, issue_c, reply_markup=button, disable_web_page_preview=True)
         return "ok"
     if data.get("forkee"):
         fork_ = f"""#Fork\n\n🍴 <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> forkou o repositório <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>"""
