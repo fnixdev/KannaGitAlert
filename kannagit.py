@@ -145,7 +145,7 @@ Title : {data['issue']['title']}
                         ]
                     )
         await msg_.delete()
-        await gitbot.send_message(chat, fork_, reply_markup=button, parse_mode="html")
+        await gitbot.send_message(chat, fork_, reply_markup=button, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("ref_type"):
         response = f"A new {data['ref_type']} on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was created by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
@@ -233,7 +233,7 @@ Title : {data['issue']['title']}
                         ]
                     )
             await msg_.delete()
-            await gitbot.send_message(chat, text_, reply_markup=button, parse_mode="html")
+            await gitbot.send_message(chat, text_, reply_markup=button, parse_mode="html", disable_web_page_preview=True)
             return "ok"
         if data.get("action") == "edited" and data.get("release"):
             text = f"<a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> {data['action']} <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>!"
