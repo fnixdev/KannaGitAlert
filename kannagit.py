@@ -151,7 +151,7 @@ async def ghoo_k(chat):
                         [
                             [
                                 InlineKeyboardButton(
-                                    f"Numero de forks: {data['repository']['forks_count']}", callback_data=f"null"
+                                    f"Total de Forks: {data['repository']['forks_count']}", callback_data=f"null"
                                 )
                             ]
                         ]
