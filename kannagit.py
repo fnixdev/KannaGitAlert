@@ -208,9 +208,17 @@ async def ghoo_k(chat):
 """
         if len(data["commits"]) > 10:
             text += f"\n\n<i>e {len(data['commits']) - 10} outros commits</i>"
-        await msg_.delete()
-        await gitbot.send_animation(chat,GIF_I, caption=text, parse_mode="html")
-        await msg_.edit(text, parse_mode="html")
+        button = InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton(
+                                    f"Abrir Issue #{data['issue']['number']}", url=f"{data['issue']['html_url']}"
+                                )
+                            ]
+                        ]
+                    )
+            await msg_.delete()
+            await gitbot.send_message(chat, text, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("pull_request"):
         if data.get("comment"):
