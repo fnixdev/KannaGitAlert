@@ -104,8 +104,9 @@ async def ghoo_k(chat):
         return "Invalid Data"
     siz_ = getsizeof(str(data))
     logging.info(f"Recieved : {siz_} Of Data.")
+    try:
         msg_ = await gitbot.send_message(
-        chat, f"`Recebidos {siz_} Bytes de dados. Verificando...`"
+        chat, f"`Received {siz_} Bytes Of Data. Now Verifying..`"
     )
     except BaseException as e:
         logging.critical(f"Unable To Send Message To Chat. \nError : {e} \nApi is Exiting")
