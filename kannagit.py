@@ -134,7 +134,7 @@ Title : {data['issue']['title']}
             await msg_.edit(issue_c)
         return "ok"
     if data.get("forkee"):
-        fork_ = f"""#Fork\n\n🍴 a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> forkou o repositório <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>"""
+        fork_ = f"""#Fork\n\n🍴 <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> forkou o repositório <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>"""
         button = InlineKeyboardMarkup(
                         [
                             [
