@@ -194,21 +194,23 @@ async def ghoo_k(chat):
                 commit_msg = escape(commit["message"]).split("\n")[0]
             else:
                 commit_msg = escape(commit["message"])
-            commits_text += f"{commit_msg}\n<a href='{commit['url']}'>{commit['id'][:7]}</a> - {commit['author']['name']} {escape('<')}{commit['author']['email']}{escape('>')}\n\n"
+            commits_text += f"\n↳ <b>{commit_msg}</b> <a href='{commit['url']}'>{commit['id'][:7]}</a> - by 🧙🏻‍♂️ <i>{commit['author']['name']}</i>\n"
             if len(commits_text) > 1000:
-                text = f"""#Commit\n✨ <b>{escape(data['repository']['name'])}</b> - New {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
+                text = f"""✨ Novos commits em {escape(data['repository']['name'])}
 {commits_text}
 """
-                await msg_.edit(text, parse_mode="html", disable_web_page_preview=True)
+                await msg_.edit(text, parse_mode="html")
                 commits_text = ""
         if not commits_text:
             return "tf"
-        text = f"""#Commit\n✨ <b>{escape(data['repository']['name'])}</b> - New {len(data['commits'])} commits ({escape(data['ref'].split('/')[-1])})
+        text = f"""✨ Novos commits em {escape(data['repository']['name'])}
 {commits_text}
 """
         if len(data["commits"]) > 10:
-            text += f"\n\n<i>And {len(data['commits']) - 10} other commits</i>"
-        await msg_.edit(text, parse_mode="html", disable_web_page_preview=True)
+            text += f"\n\n<i>e {len(data['commits']) - 10} outros commits</i>"
+        await msg_.delete()
+        await gitbot.send_animation(chat,GIF_I, caption=text, parse_mode="html")
+        await msg_.edit(text, parse_mode="html")
         return "ok"
     if data.get("pull_request"):
         if data.get("comment"):
