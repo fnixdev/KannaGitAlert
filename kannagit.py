@@ -134,19 +134,18 @@ Title : {data['issue']['title']}
             await msg_.edit(issue_c)
         return "ok"
     if data.get("forkee"):
-        fork_ = f"""
-🍴 {data['forkee']['svn_url']} Forked {data['repository']['html_url']}
-"""
+        fork_ = f"""#Fork\n\n🍴 a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> forkou o repositório <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>"""
         button = InlineKeyboardMarkup(
                         [
                             [
                                 InlineKeyboardButton(
-                                    f"Numero de forks: {data['repository']['forks_count']}", url=f"{data['repository']['html_url']}/stargazers"
+                                    f"Numero de forks: {data['repository']['forks_count']}", callback_data=f"null"
                                 )
                             ]
                         ]
                     )
-        await msg_.edit(fork_)
+        await msg_.delete()
+        await gitbot.send_message(chat, fork_, reply_markup=button, parse_mode="html")
         return "ok"
     if data.get("ref_type"):
         response = f"A new {data['ref_type']} on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was created by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
@@ -223,18 +222,18 @@ Title : {data['issue']['title']}
             await msg_.edit(text, parse_mode="html")
             return "ok"
         if data.get("action") == "started":
-            text_ = f"⭐ <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> deu uma estrela no repositório <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>"
+            text_ = f"#Star\n\n⭐ <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> deu uma estrela no repositório <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>"
             button = InlineKeyboardMarkup(
                         [
                             [
                                 InlineKeyboardButton(
-                                    f"Total de Estrelas : {data['repository']['stargazers_count']}", url=f"{data['repository']['html_url']}/stargazers"
+                                    f"Total de Estrelas : {data['repository']['stargazers_count']}", callback_data=f"null"
                                 )
                             ]
                         ]
                     )
             await msg_.delete()
-            await gitbot.send_message(chat, text=text_, reply_markup=button, parse_mode="html")
+            await gitbot.send_message(chat, text_, reply_markup=button, parse_mode="html")
             return "ok"
         if data.get("action") == "edited" and data.get("release"):
             text = f"<a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> {data['action']} <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>!"
