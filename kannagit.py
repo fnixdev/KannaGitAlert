@@ -119,7 +119,7 @@ async def ghoo_k(chat):
         return "ok"
     if data.get("issue"):
         if data.get("comment"):
-            issue_comment = f"""#Issue #Comment\n\n**💬 Novo Comentario em: {data['repository']['name']}**\n**• MSG:** __{data['comment']['body']}__"""
+            issue_comment = f"""#Issue #Comment\n\n**Novo Comentario em: {data['repository']['name']}**\n**💬 MSG:** __{data['comment']['body']}__"""
             button = InlineKeyboardMarkup(
                                     [
                                         [
