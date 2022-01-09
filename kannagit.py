@@ -199,7 +199,8 @@ async def ghoo_k(chat):
                 text = f"""✨ Novos commits em {escape(data['repository']['name'])}
 {commits_text}
 """
-                await msg_.edit(text, parse_mode="html")
+                await msg_.delete()
+                await gitbot.send_message(chat, text, parse_mode="html", disable_web_page_preview=True)
                 commits_text = ""
         if not commits_text:
             return "tf"
