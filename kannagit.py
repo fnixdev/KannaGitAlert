@@ -212,7 +212,7 @@ async def ghoo_k(chat):
                         [
                             [
                                 InlineKeyboardButton(
-                                    f"Abrir Issue #{data['issue']['number']}", url=f"{data['issue']['html_url']}"
+                                    f"Todos os Commits", url="{data['repository']['html_url']}/commits"
                                 )
                             ]
                         ]
