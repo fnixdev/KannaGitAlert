@@ -25,7 +25,9 @@ from config import Config as config
 
 gitalertapi = Quart(__name__)
 
-    
+
+GIF_I = "https://telegra.ph/file/39ee391bd58dbe2802982.gif"
+
 port_ = config.PORT
 host = config.HOST
 chat = config.CHAT_ID
@@ -195,6 +197,8 @@ Title : {data['issue']['title']}
 """
         if len(data["commits"]) > 10:
             text += f"\n\n<i>e {len(data['commits']) - 10} outros commits</i>"
+        await msg_.delete()
+        await gitbot.send_animation(chat,GIF_I, caption=text, parse_mode="html")
         await msg_.edit(text, parse_mode="html")
         return "ok"
     if data.get("pull_request"):
@@ -219,7 +223,7 @@ Title : {data['issue']['title']}
             await msg_.edit(text, parse_mode="html")
             return "ok"
         if data.get("action") == "started":
-            text_ = f"⭐ <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> Deu uma estrela no repositório <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>"
+            text_ = f"⭐ <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> deu uma estrela no repositório <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>"
             button = InlineKeyboardMarkup(
                         [
                             [
@@ -229,6 +233,7 @@ Title : {data['issue']['title']}
                             ]
                         ]
                     )
+            await msg_.delete()
             await gitbot.send_message(chat, text=text_, reply_markup=button, parse_mode="html")
             return "ok"
         if data.get("action") == "edited" and data.get("release"):
