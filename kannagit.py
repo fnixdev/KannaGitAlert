@@ -129,8 +129,8 @@ async def ghoo_k(chat):
                                         ]
                                     ]
                                 )
-             await msg_.delete()
-             await gitbot.send_message(chat, issue_comment, reply_markup=button, parse_mode="html", disable_web_page_preview=True)
+            await msg_.delete()
+            await gitbot.send_message(chat, issue_comment, reply_markup=button, parse_mode="html", disable_web_page_preview=True)
         else:
             issue_c = f"""#Issue {data['action']} em: {data['repository']['name']}\n\n**✨ Título:** `{data['issue']['title']}`\n**💬 Descrição:** __{data['issue']['body'] or "Sem Descrição"}__"""
             button = InlineKeyboardMarkup(
