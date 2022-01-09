@@ -119,19 +119,32 @@ async def ghoo_k(chat):
         return "ok"
     if data.get("issue"):
         if data.get("comment"):
-            issue_comment = f"""
-**💬 Novo Comentario :** `{data['repository']['name']}` 
-`{data['comment']['body']}`
-[#{data['issue']['number']}]({data['comment']['html_url']})
-"""
+            issue_comment = f"""#Issue #Comment\n\n**💬 Novo Comentario em: {data['repository']['name']}**\n**• MSG:** __{data['comment']['body']}__"""
             await msg_.edit(issue_comment)
+            button = InlineKeyboardMarkup(
+                                    [
+                                        [
+                                            InlineKeyboardButton(
+                                                f"Abrir Issue #{data['issue']['number']}", url=f"{data['comment']['html_url']}"
+                                            )
+                                        ]
+                                    ]
+                                )
+             await msg_.delete()
+             await gitbot.send_message(chat, issue_comment, reply_markup=button, parse_mode="html", disable_web_page_preview=True)
         else:
-            issue_c = f"""
-**⚠️ Novo {data['action']} Problema :** `{data['repository']['name']}` 
-Title : {data['issue']['title']}
-{data['issue']['body'] or "Sem Descrição"}
-[{data['issue']['number']}]({data['issue']['html_url']})"""
-            await msg_.edit(issue_c)
+            issue_c = f"""#Issue {data['action']} em: {data['repository']['name']}\n\n**✨ Título:** `{data['issue']['title']}`\n**💬 Descrição:** __{data['issue']['body'] or "Sem Descrição"}__"""
+            button = InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton(
+                                    f"Abrir Issue #{data['issue']['number']}", url=f"{data['issue']['html_url']}"
+                                )
+                            ]
+                        ]
+                    )
+            await msg_.delete()
+            await gitbot.send_message(chat, issue_c, reply_markup=button, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("forkee"):
         fork_ = f"""#Fork\n\n🍴 <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> forkou o repositório <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>"""
@@ -202,7 +215,7 @@ Title : {data['issue']['title']}
         return "ok"
     if data.get("pull_request"):
         if data.get("comment"):
-            text = f"""❗ There is a new pull request for <b>{escape(data['repository']['name'])}</b> ({data['pull_request']['state']})
+            text = f"""#Pull_Request\n\n❗ There is a new pull request for <b>{escape(data['repository']['name'])}</b> ({data['pull_request']['state']})
 {escape(data['comment']['body'])}
 <a href='{data['comment']['html_url']}'>Pull request #{data['issue']['number']}</a>
 """
