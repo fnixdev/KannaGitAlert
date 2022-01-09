@@ -104,15 +104,14 @@ async def ghoo_k(chat):
         return "Invalid Data"
     siz_ = getsizeof(str(data))
     logging.info(f"Recieved : {siz_} Of Data.")
-    try:
         msg_ = await gitbot.send_message(
-        chat, f"`Received {siz_} Bytes Of Data. Now Verifying..`"
+        chat, f"`Recebidos {siz_} Bytes de dados. Verificando...`"
     )
     except BaseException as e:
         logging.critical(f"Unable To Send Message To Chat. \nError : {e} \nApi is Exiting")
         return f"Error : {e}"
     if data.get("hook"):
-        web_hook_done = f"**Webhooked 🔗** [{data['repository']['name']}]({data['repository']['html_url']}) **By ✨** [{data['sender']['login']}]({data['sender']['html_url']})"
+        web_hook_done = f"**Repositório Conectado 🔗** [{data['repository']['name']}]({data['repository']['html_url']}) **By ✨** [{data['sender']['login']}]({data['sender']['html_url']})"
         await msg_.edit(web_hook_done)
         return "ok"
     if data.get("issue"):
@@ -134,8 +133,16 @@ Title : {data['issue']['title']}
     if data.get("forkee"):
         fork_ = f"""
 🍴 {data['forkee']['svn_url']} Forked {data['repository']['html_url']}
-Numero total de forks: __{data['repository']['forks_count']} ⚡️__
 """
+        button = InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton(
+                                    f"Numero de forks: {data['repository']['forks_count']}", url=f"{data['repository']['html_url']}/stargazers"
+                                )
+                            ]
+                        ]
+                    )
         await msg_.edit(fork_)
         return "ok"
     if data.get("ref_type"):
@@ -161,7 +168,7 @@ Numero total de forks: __{data['repository']['forks_count']} ⚡️__
             text += f"📝 <b>{escape(x['title'])}</b> ({x['action']})\n{summary}<a href='{x['html_url']}'>{x['page_name']}</a> - {x['sha'][:7]}"
             if len(data["pages"]) >= 2:
                 text += "\n=====================\n"
-            await msg_.edit(text, parse_mode="html")
+            await msg_.edit(text, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("commits"):
         commits_text = ""
@@ -211,8 +218,17 @@ Numero total de forks: __{data['repository']['forks_count']} ⚡️__
             await msg_.edit(text, parse_mode="html")
             return "ok"
         if data.get("action") == "started":
-            text = f"🌟 <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> gave a star to <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>!\n<b>Total StarGazers :</b> <i>{data['repository']['stargazers_count']} </i>"
-            await msg_.edit(text, parse_mode="html")
+            text_ = f"⭐ <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> Deu uma estrela no repositório <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>"
+            button = InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton(
+                                    f"Total de Estrelas : {data['repository']['stargazers_count']}", url=f"{data['repository']['html_url']}/stargazers"
+                                )
+                            ]
+                        ]
+                    )
+            await gitbot.send_message(chat, text=text_, reply_markup=button, parse_mode="html")
             return "ok"
         if data.get("action") == "edited" and data.get("release"):
             text = f"<a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> {data['action']} <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>!"
