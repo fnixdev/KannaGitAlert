@@ -208,7 +208,7 @@ async def ghoo_k(chat):
 """
         if len(data["commits"]) > 10:
             text += f"\n\n<i>e {len(data['commits']) - 10} outros commits</i>"
-        button = InlineKeyboardMarkup(
+            button = InlineKeyboardMarkup(
                         [
                             [
                                 InlineKeyboardButton(
