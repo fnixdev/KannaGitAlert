@@ -209,7 +209,7 @@ async def ghoo_k(chat):
         if len(data["commits"]) > 10:
             text += f"\n\n<i>e {len(data['commits']) - 10} outros commits</i>"
         await msg_.delete()
-        await gitbot.send_animation(chat,GIF_I, caption=text, parse_mode="html")
+        await gitbot.send_message(chat,text, parse_mode="html")
         await msg_.edit(text, parse_mode="html")
         return "ok"
     if data.get("pull_request"):
