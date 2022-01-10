@@ -210,7 +210,6 @@ async def ghoo_k(chat):
             text += f"\n\n<i>e {len(data['commits']) - 10} outros commits</i>"
         await msg_.delete()
         await gitbot.send_message(chat,text, parse_mode="html")
-        await msg_.edit(text, parse_mode="html")
         return "ok"
     if data.get("pull_request"):
         if data.get("comment"):
