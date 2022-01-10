@@ -200,7 +200,7 @@ async def ghoo_k(chat):
 {commits_text}
 """
                 await msg_.delete()
-                button = InlineKeyboardMarkup([[InlineKeyboardButton(f"Todos os commits", url=f"{data['repository']['html_url']}/commts")]])
+                button = InlineKeyboardMarkup([[InlineKeyboardButton(f"Todos os commits", url=f"{data['repository']['html_url']}/commits")]])
                 await gitbot.send_message(chat,text, parse_mode="html", reply_markup=button, disable_web_page_preview=True)
                 commits_text = ""
         if not commits_text:
@@ -211,7 +211,7 @@ async def ghoo_k(chat):
         if len(data["commits"]) > 10:
             text += f"\n\n<i>e {len(data['commits']) - 10} outros commits</i>"
         await msg_.delete()
-        button = InlineKeyboardMarkup([[InlineKeyboardButton(f"Todos os commits", url=f"{data['repository']['html_url']}/commts")]])
+        button = InlineKeyboardMarkup([[InlineKeyboardButton(f"Todos os commits", url=f"{data['repository']['html_url']}/commits")]])
         await gitbot.send_message(chat,text, parse_mode="html", reply_markup=button, disable_web_page_preview=True)
         return "ok"
     if data.get("pull_request"):
