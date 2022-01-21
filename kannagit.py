@@ -280,18 +280,19 @@ if config.HEROKU_APP_NAME:
 
 @gitbot.on_message(filters.command(["start", "help", "repo"]))
 async def bot_(client, message):
-    key_board = [
-                   
-                  InlineKeyboardButton("Repo", url="https://github.com/fnixdev/KannaGitBot"),
-                  InlineKeyboardButton("Dev", url="https://t.me/fnixdev")
-                ],
+    buttons_ = InlineKeyboardMarkup(
+            [
                 [
-                  InlineKeyboardButton("✨ KannaX Updates", url="https://t.me/kannaxup")
-                ]
+                    InlineKeyboardButton("Source", url="https://github.com/fnixdev/KannaGitBot"),
+                    InlineKeyboardButton("Dev", url="ttps://t.me/fnixdev"),
+                ],
+                [InlineKeyboardButton("✨ Suporte", url="https://t.me/fnixsup")],
+            ]
+        )
     file = "https://telegra.ph/file/c64de99e926b05c80eaa6.gif"
     msg = f"__Hello__ {message.from_user.mention}. __Eu sou Kanna, um GitBot de alerta. Eu notifico quando uma alteração é feita no repositório.__"
     await message.reply_animation(
-        file, caption=msg, quote=True, reply_markup=InlineKeyboardMarkup([key_board])
+        file, caption=msg, quote=True, reply_markup=buttons_
     )
 
 
