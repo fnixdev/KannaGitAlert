@@ -129,8 +129,8 @@ async def ghoo_k(chat):
                                         ]
                                     ]
                                 )
-            #await msg_.delete()
-            await msg_.edit(chat, issue_comment, reply_markup=button, disable_web_page_preview=True)
+            await msg_.delete()
+            await gitbot.send_message(chat, issue_comment, reply_markup=button, disable_web_page_preview=True)
         else:
             issue_c = f"""#Issue {data['action']} em: {data['repository']['name']}\n\n**✨ Título:** `{data['issue']['title']}`\n**💬 Descrição:** __{data['issue']['body'] or "Sem Descrição"}__"""
             button = InlineKeyboardMarkup(
@@ -142,8 +142,8 @@ async def ghoo_k(chat):
                             ]
                         ]
                     )
-           # await msg_.delete()
-            await msg_.edit(issue_c, reply_markup=button, disable_web_page_preview=True)
+            await msg_.delete()
+            await gitbot.send_message(chat, issue_c, reply_markup=button, disable_web_page_preview=True)
         return "ok"
     if data.get("forkee"):
         fork_ = f"""#Fork\n\n🍴 <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> forkou o repositório <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>"""
@@ -156,7 +156,8 @@ async def ghoo_k(chat):
                             ]
                         ]
                     )
-        await msg_.edit(fork_, reply_markup=button, parse_mode="html", disable_web_page_preview=True)
+        await msg_.delete()
+        await gitbot.send_message(chat, fork_, reply_markup=button, parse_mode="html", disable_web_page_preview=True)
         return "ok"
     if data.get("ref_type"):
         response = f"A new {data['ref_type']} on <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a> was created by <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a>!"
@@ -198,9 +199,9 @@ async def ghoo_k(chat):
                 text = f"""#Commits\n\n✨ Novos commits em {escape(data['repository']['name'])}
 {commits_text}
 """
-               # await msg_.delete()
+                await msg_.delete()
                 button = InlineKeyboardMarkup([[InlineKeyboardButton(f"Todos os commits", url=f"{data['repository']['html_url']}/commits")]])
-                await msg_.edit(text, parse_mode="html", reply_markup=button, disable_web_page_preview=True)
+                await gitbot.send_message(chat,text, parse_mode="html", reply_markup=button, disable_web_page_preview=True)
                 commits_text = ""
         if not commits_text:
             return "tf"
@@ -209,9 +210,9 @@ async def ghoo_k(chat):
 """
         if len(data["commits"]) > 10:
             text += f"\n\n<i>e {len(data['commits']) - 10} outros commits</i>"
-        #await msg_.delete()
+        await msg_.delete()
         button = InlineKeyboardMarkup([[InlineKeyboardButton(f"Todos os commits", url=f"{data['repository']['html_url']}/commits")]])
-        await msg_.edit(text, parse_mode="html", reply_markup=button, disable_web_page_preview=True)
+        await gitbot.send_message(chat,text, parse_mode="html", reply_markup=button, disable_web_page_preview=True)
         return "ok"
     if data.get("pull_request"):
         if data.get("comment"):
@@ -245,8 +246,8 @@ async def ghoo_k(chat):
                             ]
                         ]
                     )
-           # await msg_.delete()
-            await msg_.edit(text_, reply_markup=button, parse_mode="html", disable_web_page_preview=True)
+            await msg_.delete()
+            await gitbot.send_message(chat, text_, reply_markup=button, parse_mode="html", disable_web_page_preview=True)
             return "ok"
         if data.get("action") == "edited" and data.get("release"):
             text = f"<a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> {data['action']} <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>!"
