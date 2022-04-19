@@ -26,8 +26,6 @@ from config import Config as config
 gitalertapi = Quart(__name__)
 
 
-GIF_I = "https://telegra.ph/file/39ee391bd58dbe2802982.gif"
-
 port_ = config.PORT
 host = config.HOST
 chat = config.CHAT_ID
@@ -151,7 +149,7 @@ async def ghoo_k(chat):
                         [
                             [
                                 InlineKeyboardButton(
-                                    f"Total de Forks: {data['repository']['forks_count']}", callback_data=f"null"
+                                    f"Total de Forks: {data['repository']['forks_count']}", url=f"{data['repository']['html_url']}/network/members"
                                 )
                             ]
                         ]
@@ -233,7 +231,7 @@ async def ghoo_k(chat):
         if data.get("action") == "published" and data.get("release"):
             text = f"<a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> {data['action']} <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>!"
             text += f"\n\n<b>{data['release']['name']}</b> ({data['release']['tag_name']})\n{data['release']['body']}\n\n<a href='{data['release']['tarball_url']}'>Download tar</a> | <a href='{data['release']['zipball_url']}'>Download zip</a>"
-            await msg_.edit(text, parse_mode="html")
+            await msg_.edit(text, parse_mode="html", disable_web_page_preview=True)
             return "ok"
         if data.get("action") == "started":
             text_ = f"#Star\n\n⭐ <a href='{data['sender']['html_url']}'>{data['sender']['login']}</a> deu uma estrela no repositório <a href='{data['repository']['html_url']}'>{data['repository']['name']}</a>"
@@ -241,7 +239,7 @@ async def ghoo_k(chat):
                         [
                             [
                                 InlineKeyboardButton(
-                                    f"Total de Estrelas : {data['repository']['stargazers_count']}", callback_data=f"null"
+                                    f"Total de Estrelas : {data['repository']['stargazers_count']}", url=f"{data['repository']['html_url']}/stargazers"
                                 )
                             ]
                         ]
@@ -286,13 +284,15 @@ async def bot_(client, message):
                     InlineKeyboardButton("Source", url="https://github.com/fnixdev/KannaGitBot"),
                     InlineKeyboardButton("Dev", url="ttps://t.me/fnixdev"),
                 ],
-                [InlineKeyboardButton("✨ Suporte", url="https://t.me/fnixsup")],
+                [
+                    InlineKeyboardButton("✨ Suporte", url="https://t.me/fnixsup")
+                ],
             ]
         )
     file = "https://telegra.ph/file/c64de99e926b05c80eaa6.gif"
-    msg = f"__Hello__ {message.from_user.mention}. __Eu sou Kanna, um GitBot de alerta. Eu notifico quando uma alteração é feita no repositório.__"
-    await message.reply_animation(
-        file, caption=msg, quote=True, reply_markup=buttons_
+    msg = f"__Hello__. __Eu sou Kanna, um GitBot de alerta. Eu notifico quando uma alteração é feita no repositório.__"
+    await client.send_animation(
+        message.chat.id, file, caption=msg, reply_markup=buttons_
     )
 
 
