@@ -18,7 +18,7 @@ from hypercorn import Config
 from pyrogram import Client
 from pyrogram import __version__ as ve
 from pyrogram import filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from quart import Quart, jsonify, request
 
 from config import Config as config
@@ -277,7 +277,7 @@ if config.HEROKU_APP_NAME:
 
 
 @gitbot.on_message(filters.command(["start", "help", "repo"]))
-async def bot_(client, message):
+async def bot_(client, message: Message):
     buttons_ = InlineKeyboardMarkup(
             [
                 [
